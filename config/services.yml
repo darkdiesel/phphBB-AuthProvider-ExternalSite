@@ -1,0 +1,21 @@
+services:
+    auth.provider.othersite:
+        class: dark_diesel\AuthProviderOtherSite\phpbb\auth\provider\othersite
+        arguments:
+            - @dbal.conn
+            - @config
+            - @passwords.manager
+            - @request
+            - @user
+            - @service_container
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: auth.provider }
+    dark_diesel.AuthProviderOtherSite.listener:
+        class: dark_diesel\AuthProviderOtherSite\event\main_listener
+        arguments:
+            - @controller.helper
+            - @template
+        tags:
+            - { name: event.listener }
