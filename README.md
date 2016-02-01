@@ -1,5 +1,9 @@
 # phpBB 3.1 Extension - Auth Provider for Other Site Users
 
+## About
+
+Auth provider allowed authorisation base on external site users for phpBB 3.1
+
 ## Installation
 
 Clone into phpBB folder /ext/dark_diesel/AuthProviderOtherSite:
@@ -10,4 +14,4 @@ Go to "ACP" > "Customise" > "Extensions" and enable the "Auth Provider Other Sit
 
 ## License
 
-[GPLv2](LICENSE)
+[GPLv2](license.txt)

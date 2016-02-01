@@ -1,10 +1,10 @@
 {
-	"name": "dark_diesel/AuthProviderOtherSite",
+	"name": "darkdiesel/authproviderexternalsite",
 	"type": "phpbb-extension",
-	"description": "Auth provider allowed authorisation on other site for phpBB 3.1",
-	"homepage": "https://plus.google.com/+IgorPeshkov",
-	"version": "0.9.0b",
-	"time": "2016-01-30",
+	"description": "Auth provider allowed authorisation base on external site users for phpBB 3.1",
+	"homepage": "https://github.com/darkdiesel/phphBB-AuthProvider-ExternalSite",
+	"version": "0.9.1b",
+	"time": "2016-02-01",
 	"license": "GPL-2.0",
 	"authors": [{
 			"name": "Igor Peshkov",
@@ -19,7 +19,7 @@
 		"phpbb/epv": "dev-master"
 	},
 	"extra": {
-		"display-name": "Auth Provider Other Site",
+		"display-name": "Auth Provider External Site",
 		"soft-require": {
 			"phpbb/phpbb": ">=3.1.0-RC2,<3.2.*@dev"
 		}
