@@ -18,7 +18,7 @@ namespace darkdiesel\authproviderexternalsite\phpbb\auth\provider;
  * This is for authentication via the integrated external site
  */
 class externalsite extends \phpbb\auth\provider\base {
-	var $itoa64;
+	var $wp4x_itoa64;
 	var $iteration_count_log2;
 	var $portable_hashes;
 	var $random_state;
@@ -59,7 +59,7 @@ class externalsite extends \phpbb\auth\provider\base {
 		$this->php_ext           = $php_ext;
 		$this->phpbb_container   = $phpbb_container;
 
-		$this->itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		$this->wp4x_itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 		$iteration_count_log2 = 8;
 		$portable_hashes      = TRUE;
@@ -75,19 +75,19 @@ class externalsite extends \phpbb\auth\provider\base {
 	}
 
 	public function get_external_site_user( $username_clean ) {
-		switch ($this->config['auth_externalsite_type']){
+		switch ( $this->config['auth_externalsite_type'] ) {
 			case 'custom':
-				$user_tbl = $this->config['auth_externalsite_user_table'];
+				$user_tbl  = $this->config['auth_externalsite_user_table'];
 				$user_name = $this->config['auth_externalsite_user_name_fld'];
 				break;
 			case 'wp4x':
 				$prefix = $this->config['auth_externalsite_wp4x_db_prefix'];
 
-				$user_tbl = sprintf('%susers', $prefix);
+				$user_tbl  = sprintf( '%susers', $prefix );
 				$user_name = 'user_login';
 				break;
-			default:{
-				$user_tbl = 'users';
+			default: {
+				$user_tbl  = 'users';
 				$user_name = 'login';
 			}
 		}
@@ -225,7 +225,13 @@ class externalsite extends \phpbb\auth\provider\base {
 				);
 			}
 
-			if ( $this->check_pass( $external_site_user, $password ) ) {
+			if ( $forum_user['group_id'] == 5 ) {
+				$password_correct = $this->passwords_manager->check( $password, $forum_user['user_password'], $forum_user );
+			} else {
+				$password_correct = $this->check_pass( $external_site_user, $password );
+			}
+
+			if ( $password_correct ) {
 				return array(
 					'status'    => LOGIN_SUCCESS_CREATE_PROFILE,
 					'error_msg' => FALSE,
@@ -268,8 +274,8 @@ class externalsite extends \phpbb\auth\provider\base {
 		}
 
 		// Check password
-		if ($forum_user['group_id'] == 5){
-			 $password_correct = $this->passwords_manager->check($password, $forum_user['user_password'], $forum_user);
+		if ( $forum_user['group_id'] == 5 ) {
+			$password_correct = $this->passwords_manager->check( $password, $forum_user['user_password'], $forum_user );
 		} else {
 			$password_correct = $this->check_pass( $external_site_user, $password );
 		}
@@ -362,20 +368,20 @@ class externalsite extends \phpbb\auth\provider\base {
 		return array(
 			'TEMPLATE_FILE' => './../../ext/darkdiesel/authproviderexternalsite/adm/style/auth_provider_externalsite.html',
 			'TEMPLATE_VARS' => array(
-				'AUTH_EXTERNALSITE_DBMS'                => $new_config['auth_externalsite_dbms'],
-				'AUTH_EXTERNALSITE_IS_USERS_SAME_DB' => ( $new_config['auth_externalsite_is_users_same_db'] == 'true' ) ? 'true' : 'false',
-				'AUTH_EXTERNALSITE_DB_HOST'             => $new_config['auth_externalsite_db_host'],
-				'AUTH_EXTERNALSITE_DB_USER'             => $new_config['auth_externalsite_db_user'],
-				'AUTH_EXTERNALSITE_DB_PASS'             => $new_config['auth_externalsite_db_pass'],
-				'AUTH_EXTERNALSITE_DB_PORT'             => $new_config['auth_externalsite_db_port'],
-				'AUTH_EXTERNALSITE_DB_NAME'             => $new_config['auth_externalsite_db_name'],
-				'AUTH_EXTERNALSITE_TYPE'                => $new_config['auth_externalsite_type'],
-				'AUTH_EXTERNALSITE_WP4X_DB_PREFIX'      => $new_config['auth_externalsite_wp4x_db_prefix'],
-				'AUTH_EXTERNALSITE_USER_TABLE'          => $new_config['auth_externalsite_user_table'],
-				'AUTH_EXTERNALSITE_USER_NAME_FLD'       => $new_config['auth_externalsite_user_name_fld'],
-				'AUTH_EXTERNALSITE_USER_PASSWORD_FLD'   => $new_config['auth_externalsite_user_password_fld'],
-				'AUTH_EXTERNALSITE_USER_EMAIL_FLD'      => $new_config['auth_externalsite_user_email_fld'],
-				'AUTH_EXTERNALSITE_CUSTOM_HASH'         => $new_config['auth_externalsite_custom_hash'],
+				'AUTH_EXTERNALSITE_DBMS'              => $new_config['auth_externalsite_dbms'],
+				'AUTH_EXTERNALSITE_IS_USERS_SAME_DB'  => ( $new_config['auth_externalsite_is_users_same_db'] == 'true' ) ? 'true' : 'false',
+				'AUTH_EXTERNALSITE_DB_HOST'           => $new_config['auth_externalsite_db_host'],
+				'AUTH_EXTERNALSITE_DB_USER'           => $new_config['auth_externalsite_db_user'],
+				'AUTH_EXTERNALSITE_DB_PASS'           => $new_config['auth_externalsite_db_pass'],
+				'AUTH_EXTERNALSITE_DB_PORT'           => $new_config['auth_externalsite_db_port'],
+				'AUTH_EXTERNALSITE_DB_NAME'           => $new_config['auth_externalsite_db_name'],
+				'AUTH_EXTERNALSITE_TYPE'              => $new_config['auth_externalsite_type'],
+				'AUTH_EXTERNALSITE_WP4X_DB_PREFIX'    => $new_config['auth_externalsite_wp4x_db_prefix'],
+				'AUTH_EXTERNALSITE_USER_TABLE'        => $new_config['auth_externalsite_user_table'],
+				'AUTH_EXTERNALSITE_USER_NAME_FLD'     => $new_config['auth_externalsite_user_name_fld'],
+				'AUTH_EXTERNALSITE_USER_PASSWORD_FLD' => $new_config['auth_externalsite_user_password_fld'],
+				'AUTH_EXTERNALSITE_USER_EMAIL_FLD'    => $new_config['auth_externalsite_user_email_fld'],
+				'AUTH_EXTERNALSITE_CUSTOM_HASH'       => $new_config['auth_externalsite_custom_hash'],
 			),
 		);
 	}
@@ -383,14 +389,17 @@ class externalsite extends \phpbb\auth\provider\base {
 	private function check_pass( $user, $password ) {
 		$hash = '';
 
-		switch ($this->config['auth_externalsite_type']){
+		$pass_fld = '';
+
+		switch ( $this->config['auth_externalsite_type'] ) {
 			case 'custom':
+				$pass_fld = $this->config['auth_externalsite_user_password_fld'];
 				switch ( $this->config['auth_externalsite_custom_hash'] ) {
 					case 'sha1':
-						$hash =  sha1( $password );
+						$hash = sha1( $password );
 						break;
 					case 'md5':
-						$hash =  md5( $password );
+						$hash = md5( $password );
 						break;
 					case 'custom':
 
@@ -401,20 +410,102 @@ class externalsite extends \phpbb\auth\provider\base {
 				}
 				break;
 			case 'wp4x':
-				$hash = $this->get_wp4x_pass_hash($password);
+				$pass_fld = 'user_pass';
+				$hash     = $this->wp4x_get_pass_hash( $password, $user[ $pass_fld ] );
 				break;
 		}
 
-		if (empty($hash)){
-			return false;
+		if ( empty( $hash ) ) {
+			return FALSE;
 		} else {
-			return $hash == $user[ $this->config['auth_externalsite_user_password_fld'] ];
+			return $hash === $user[ $pass_fld ];
 		}
 	}
 
-	private function get_wp4x_pass_hash( $pass ) {
-		//TODO: calculate hash for wp4x user
+	private function wp4x_get_pass_hash( $pass, $hash = FALSE ) {
+		if ( strlen( $pass ) > 4096 ) {
+			return FALSE;
+		}
+
+		$hash_cur = $this->wp4x_crypt_private( $pass, $hash );
+		if ( $hash_cur[0] == '*' ) {
+			$hash_cur = crypt( $pass, $hash );
+		}
+
+		return $hash_cur;
 	}
 
+	private function wp4x_crypt_private( $password, $setting ) {
+		$output = '*0';
+		if ( substr( $setting, 0, 2 ) == $output ) {
+			$output = '*1';
+		}
 
+		$id = substr( $setting, 0, 3 );
+		# We use "$P$", phpBB3 uses "$H$" for the same thing
+		if ( $id != '$P$' && $id != '$H$' ) {
+			return $output;
+		}
+
+		$count_log2 = strpos( $this->wp4x_itoa64, $setting[3] );
+		if ( $count_log2 < 7 || $count_log2 > 30 ) {
+			return $output;
+		}
+
+		$count = 1 << $count_log2;
+
+		$salt = substr( $setting, 4, 8 );
+		if ( strlen( $salt ) != 8 ) {
+			return $output;
+		}
+
+		# We're kind of forced to use MD5 here since it's the only
+		# cryptographic primitive available in all versions of PHP
+		# currently in use.  To implement our own low-level crypto
+		# in PHP would result in much worse performance and
+		# consequently in lower iteration counts and hashes that are
+		# quicker to crack (by non-PHP code).
+		if ( PHP_VERSION >= '5' ) {
+			$hash = md5( $salt . $password, TRUE );
+			do {
+				$hash = md5( $hash . $password, TRUE );
+			} while ( -- $count );
+		} else {
+			$hash = pack( 'H*', md5( $salt . $password ) );
+			do {
+				$hash = pack( 'H*', md5( $hash . $password ) );
+			} while ( -- $count );
+		}
+
+		$output = substr( $setting, 0, 12 );
+		$output .= self::wp4x_encode64( $hash, 16 );
+
+		return $output;
+	}
+
+	private function wp4x_encode64( $input, $count ) {
+		$output = '';
+		$i      = 0;
+		do {
+			$value = ord( $input[ $i ++ ] );
+			$output .= $this->wp4x_itoa64[ $value & 0x3f ];
+			if ( $i < $count ) {
+				$value |= ord( $input[ $i ] ) << 8;
+			}
+			$output .= $this->wp4x_itoa64[ ( $value >> 6 ) & 0x3f ];
+			if ( $i ++ >= $count ) {
+				break;
+			}
+			if ( $i < $count ) {
+				$value |= ord( $input[ $i ] ) << 16;
+			}
+			$output .= $this->wp4x_itoa64[ ( $value >> 12 ) & 0x3f ];
+			if ( $i ++ >= $count ) {
+				break;
+			}
+			$output .= $this->wp4x_itoa64[ ( $value >> 18 ) & 0x3f ];
+		} while ( $i < $count );
+
+		return $output;
+	}
 }
