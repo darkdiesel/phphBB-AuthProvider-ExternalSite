@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Auth provider allowed authorisation base on external site users for phpBB 3.1",
 	"homepage": "https://github.com/darkdiesel/phphBB-AuthProvider-ExternalSite",
-	"version": "0.9.1b",
-	"time": "2016-02-01",
+	"version": "0.9.2b",
+	"time": "2016-08-29",
 	"license": "GPL-2.0",
 	"authors": [{
 			"name": "Igor Peshkov",
