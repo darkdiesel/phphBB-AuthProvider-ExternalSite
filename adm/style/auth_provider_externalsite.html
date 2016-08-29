@@ -1,19 +1,158 @@
-<fieldset id="auth_externalsite_settings">
-    <legend>{L_AUTH_EXTERNALSITE}</legend>
-    <dl>
-        <dt><label for="externalsite_user_table">{L_AUTH_EXTERNALSITE_USER_TABLE}{L_COLON}</label><br /><span>{L_AUTH_EXTERNALSITE_USER_TABLE_EXPLAIN}</span></dt>
-        <dd><input type="text" id="externalsite_user_table" size="40" name="config[auth_externalsite_user_table]" value="{AUTH_EXTERNALSITE_USER_TABLE}" /></dd>
-    </dl>
-    <dl>
-        <dt><label for="externalsite_user_name_fld">{L_AUTH_EXTERNALSITE_USER_NAME_FLD}{L_COLON}</label><br /><span>{L_AUTH_EXTERNALSITE_USER_NAME_FLD_EXPLAIN}</span></dt>
-        <dd><input type="text" id="externalsite_user_name_fld" size="40" name="config[auth_externalsite_user_name_fld]" value="{AUTH_EXTERNALSITE_USER_NAME_FLD}" /></dd>
-    </dl>
-    <dl>
-        <dt><label for="externalsite_user_password_fld">{L_AUTH_EXTERNALSITE_USER_PASSWORD_FLD}{L_COLON}</label><br /><span>{L_AUTH_EXTERNALSITE_USER_PASSWORD_FLD_EXPLAIN}</span></dt>
-        <dd><input type="text" id="externalsite_user_password_fld" size="40" name="config[auth_externalsite_user_password_fld]" value="{AUTH_EXTERNALSITE_USER_PASSWORD_FLD}" /></dd>
-    </dl>
-    <dl>
-        <dt><label for="externalsite_user_email_fld">{L_AUTH_EXTERNALSITE_USER_EMAIL_FLD}{L_COLON}</label><br /><span>{L_AUTH_EXTERNALSITE_USER_EMAIL_FLD_EXPLAIN}</span></dt>
-        <dd><input type="text" id="externalsite_user_email_fld" size="40" name="config[auth_externalsite_user_email_fld]" value="{AUTH_EXTERNALSITE_USER_EMAIL_FLD}" /></dd>
-    </dl>
-</fieldset>
+<div id="auth_externalsite_settings">
+    <fieldset>
+        <legend>{L_AUTH_EXTERNALSITE_DB_CONNECTION}</legend>
+        <dl>
+            <dt>
+                <label for="externalsite_dbms">{L_AUTH_EXTERNALSITE_DBMS}</label><br/>
+            </dt>
+            <dd>
+                <select name="config[auth_externalsite_dbms]" id="externalsite_dbms" >
+                    <option value=""></option>
+                    <option value="mysql" <!-- IF AUTH_EXTERNALSITE_DBMS == 'mysql'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_DBMS_MYSQL}</option>
+                    <option value="mysqli" <!-- IF AUTH_EXTERNALSITE_DBMS == 'mysqli'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_DBMS_MYSQLI}</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                <label for="externalsite_is_users_same_db">{L_AUTH_EXTERNALSITE_IS_USERS_SAME_DB}</label><br/>
+            </dt>
+            <dd>
+                <select name="config[auth_externalsite_is_users_same_db]" id="externalsite_is_users_same_db" data-togglable-settings="true">
+                    <option value="true" <!-- IF AUTH_EXTERNALSITE_IS_USERS_SAME_DB == 'true'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_IN_SAME_DB}</option>
+                    <option value="false" data-toggle-setting="#auth_externalsite_db"  <!-- IF AUTH_EXTERNALSITE_IS_USERS_SAME_DB == 'false'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_IN_REMOTE_DB}</option>
+                </select>
+            </dd>
+        </dl>
+        <div id="auth_externalsite_db">
+            <dl>
+                <dt>
+                    <label for="externalsite_db_host">{L_AUTH_EXTERNALSITE_DB_HOST}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_DB_HOST_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_db_host" size="40" name="config[auth_externalsite_db_host]" value="{AUTH_EXTERNALSITE_DB_HOST}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_db_user">{L_AUTH_EXTERNALSITE_DB_USER}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_DB_USER_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_db_user" size="40" name="config[auth_externalsite_db_user]" value="{AUTH_EXTERNALSITE_DB_USER}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_db_pass">{L_AUTH_EXTERNALSITE_DB_PASS}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_DB_PASS_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="password" id="externalsite_db_pass" size="40" name="config[auth_externalsite_db_pass]" value="{AUTH_EXTERNALSITE_DB_PASS}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_db_port">{L_AUTH_EXTERNALSITE_DB_PORT}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_DB_PORT_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_db_port" size="40" name="config[auth_externalsite_db_port]" value="{AUTH_EXTERNALSITE_DB_PORT}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_db_name">{L_AUTH_EXTERNALSITE_DB_NAME}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_DB_NAME_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_db_name" size="40" name="config[auth_externalsite_db_name]" value="{AUTH_EXTERNALSITE_DB_NAME}" />
+                </dd>
+            </dl>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>{L_AUTH_EXTERNALSITE_TABLE_SETTINGS}</legend>
+        <dl>
+            <dt>
+                <label for="auth_externalsite_type">{L_AUTH_EXTERNALSITE_TYPE}</label><br/>
+                <span>{L_AUTH_EXTERNALSITE_TYPE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <select name="config[auth_externalsite_type]" id="auth_externalsite_type" data-togglable-settings="true">
+                    <option value=""></option>
+                    <option value="custom" data-toggle-setting="#auth_externalsite_custom"  <!-- IF AUTH_EXTERNALSITE_TYPE == 'custom'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_TYPE_CUSTOM}</option>
+                    <option value="wp4x" data-toggle-setting="#auth_externalsite_wp4x" <!-- IF AUTH_EXTERNALSITE_TYPE == 'wp4x'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_TYPE_WP4X}</option>
+                </select>
+            </dd>
+        </dl>
+        <div id="auth_externalsite_wp4x">
+            <dl>
+                <dt>
+                    <label for="externalsite_wp4x_db_prefix">{L_AUTH_EXTERNALSITE_WP4X_DB_PREFIX}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_WP4X_DB_PREFIX_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_wp4x_db_prefix" size="40" name="config[auth_externalsite_wp4x_db_prefix]" value="{AUTH_EXTERNALSITE_WP4X_DB_PREFIX}" />
+                </dd>
+            </dl>
+        </div>
+
+        <div id="auth_externalsite_custom">
+            <dl>
+                <dt>
+                    <label for="externalsite_user_table">{L_AUTH_EXTERNALSITE_USER_TABLE}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_USER_TABLE_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_user_table" size="40" name="config[auth_externalsite_user_table]" value="{AUTH_EXTERNALSITE_USER_TABLE}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_user_name_fld">{L_AUTH_EXTERNALSITE_USER_NAME_FLD}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_USER_NAME_FLD_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_user_name_fld" size="40" name="config[auth_externalsite_user_name_fld]" value="{AUTH_EXTERNALSITE_USER_NAME_FLD}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_user_password_fld">{L_AUTH_EXTERNALSITE_USER_PASSWORD_FLD}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_USER_PASSWORD_FLD_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_user_password_fld" size="40" name="config[auth_externalsite_user_password_fld]" value="{AUTH_EXTERNALSITE_USER_PASSWORD_FLD}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="externalsite_user_email_fld">{L_AUTH_EXTERNALSITE_USER_EMAIL_FLD}{L_COLON}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_USER_EMAIL_FLD_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <input type="text" id="externalsite_user_email_fld" size="40" name="config[auth_externalsite_user_email_fld]" value="{AUTH_EXTERNALSITE_USER_EMAIL_FLD}" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label for="auth_externalsite_custom_hash">{L_AUTH_EXTERNALSITE_CUSTOM_HASH}</label><br/>
+                    <span>{L_AUTH_EXTERNALSITE_CUSTOM_HASH_EXPLAIN}</span>
+                </dt>
+                <dd>
+                    <select name="config[auth_externalsite_custom_hash]" id="auth_externalsite_custom_hash" data-togglable-settings="true">
+                        <option value=""></option>
+                        <option value="sha1" <!-- IF AUTH_EXTERNALSITE_CUSTOM_HASH == 'sha1'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_CUSTOM_HASH_SHA1}</option>
+                        <option value="md5" <!-- IF AUTH_EXTERNALSITE_CUSTOM_HASH == 'md5'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_CUSTOM_HASH_MD5}</option>
+                        <option value="custom" data-toggle-setting="#auth_externalsite_hash_custom" <!-- IF AUTH_EXTERNALSITE_CUSTOM_HASH == 'custom'  -->selected="selected"<!-- ENDIF -->>{L_AUTH_EXTERNALSITE_CUSTOM_HASH_CUSTOM}</option>
+                    </select>
+                </dd>
+            </dl>
+            <div id="auth_externalsite_hash_custom">
+                TO BE DEVELOPED!
+            </div>
+        </div>
+    </fieldset>
+</div>
