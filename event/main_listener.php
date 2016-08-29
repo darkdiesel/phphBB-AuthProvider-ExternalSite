@@ -1,7 +1,7 @@
 <?php
 /**
 *
- * @package phpBB Extension - Other Site Auth Provider
+ * @package phpBB Extension - External Site Auth Provider
  * @copyright (c) Igor Peshkov (dark_diesel) <https://plus.google.com/+IgorPeshkov>
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
@@ -9,7 +9,7 @@
 *
 */
 
-namespace dark_diesel\AuthProviderOtherSite\event;
+namespace darkdiesel\authproviderexternalsite\event;
 
 /**
 * @ignore
@@ -50,7 +50,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'dark_diesel/AuthProviderOtherSite',
+			'ext_name' => 'darkdiesel/authproviderexternalsite',
 			'lang_set' => 'acp/board',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;

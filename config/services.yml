@@ -1,6 +1,6 @@
 services:
-    auth.provider.othersite:
-        class: dark_diesel\AuthProviderOtherSite\phpbb\auth\provider\othersite
+    auth.provider.externalsite:
+        class: darkdiesel\authproviderexternalsite\phpbb\auth\provider\externalsite
         arguments:
             - @dbal.conn
             - @config
@@ -12,8 +12,8 @@ services:
             - %core.php_ext%
         tags:
             - { name: auth.provider }
-    dark_diesel.AuthProviderOtherSite.listener:
-        class: dark_diesel\AuthProviderOtherSite\event\main_listener
+    darkdiesel.authproviderexternalsite.listener:
+        class: darkdiesel\authproviderexternalsite\event\main_listener
         arguments:
             - @controller.helper
             - @template
